@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+svg {
+  font: 10px sans-serif;
+}
+
+.background path {
+  fill: none;
+  stroke: #ddd;
+  shape-rendering: crispEdges;
+}
+
+.foreground path {
+  fill: none;
+  stroke: steelblue;
+}
+
+.brush .extent {
+  fill-opacity: .3;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+.axis line,
+.axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+  
+} 
+  
+* {margin: 0; padding: 0;}
+#container {height: 750px; width:1900px; font-size: 0;}
+#map1, #map2 {display: inline-block; *display: inline; zoom: 1; vertical-align: top; font-size: 12px;}
+#map1 {width: 50%; height: 100%;}
+
+#map2 {width: 50%; height: 100%;} 
+ 
+#graph  {height: 200px; width:900px; font-size: 0;}
+  
+
+
+</style>
+<html>
+  <head>
+    <title>GeoServer Test</title>
+    <link rel="stylesheet" href="./OpenLayers/ol.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="d3.parcoords.css">
+    
+    <script src="./OpenLayers/ol.js"></script>
+    
+    
+  </head>
+  <body>
+  	<div id="container" >
+	    <div id="map1" ></div>
+	    
+	    <button type="button" onclick="refresh()">refresh</button>	
+    	
+    </div>
+    <div id="graph">hola1</div>
+    <script>
+
+	function refresh() {
+	    document.getElementById("graph").innerHTML = "hola2";
+	    agebs.getSource().updateParams({"time": Date.now()});
+	    
+	}
+	
+    	var agebs = new ol.layer.Tile({
+	   
+	    source: new ol.source.TileWMS(/** @type {olx.source.TileWMSOptions} */ ({
+	      url: 'http://localhost/geoserver/megadapt/wms',
+	      params: {'LAYERS': 'megadapt:agebs_calles_geo', 'TILED': true},
+	      serverType: 'geoserver'
+	    }))
+	  });
+	
+     	var raster = new ol.layer.Tile({
+      		source: new ol.source.OSM()
+    	});
+     
+     	
+ 
+    	var map = new ol.Map({
+    		
+     		projection:"EPSG:4326",
+     		layers: [raster, agebs],
+     		target: 'map1',
+     		view: new ol.View({
+	       		center: ol.proj.fromLonLat([-99.15,19.36]),
+	       		zoom: 11
+      		})
+     	});
+    	function teTraigoFin() {
+
+	    agebs.getSource().updateParams({"time": Date.now()});
+
+	    setTimeout(teTraigoFin, 500);
+	}
+
+	teTraigoFin();
+    	
+    </script>
+    
+    
+    
+  </body>
+</html>
