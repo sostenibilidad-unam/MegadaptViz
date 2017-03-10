@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html>
+<head>
+<meta charset="utf-8" />
 
+<style>
 svg {
   font: 10px sans-serif;
 }
@@ -43,48 +45,44 @@ svg {
 #map2 {width: 50%; height: 100%;} 
  
 #graph  {height: 200px; width:900px; font-size: 0;}
-  
-
-
 </style>
-<html>
-  <head>
-    <title>GeoServer Test</title>
-    <link rel="stylesheet" href="./OpenLayers/ol.css" type="text/css">
-    <link rel="stylesheet" type="text/css" href="d3.parcoords.css">
-    
-    <script src="./OpenLayers/ol.js"></script>
-    
-    
-  </head>
-  <body>
-  	<div id="container" >
-	    <div id="map1" ></div>
-	    
-	    <button type="button" onclick="refresh()">refresh</button>	
-    	
-    </div>
-    <div id="graph">hola1</div>
-    <script>
 
-	function refresh() {
-	    document.getElementById("graph").innerHTML = "hola2";
-	    agebs.getSource().updateParams({"time": Date.now()});
-	    
-	}
+
+<title>GeoServer Test</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.0.1/ol.css"
+type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.0.1/ol.js"></script>
+</head>
+
+
+<body>
+<div id="container" >
+<div id="map1" ></div>
+
+<button type="button" onclick="refresh()">refresh</button>	
+
+</div>
+<div id="graph">hola1</div>
+<script>
+
+function refresh() {
+   document.getElementById("graph").innerHTML = "hola2";
+   agebs.getSource().updateParams({"time": Date.now()});
+}
 	
-    	var agebs = new ol.layer.Tile({
-	   
-	    source: new ol.source.TileWMS(/** @type {olx.source.TileWMSOptions} */ ({
-	      url: 'http://localhost/geoserver/megadapt/wms',
-	      params: {'LAYERS': 'megadapt:agebs_calles_geo', 'TILED': true},
-	      serverType: 'geoserver'
-	    }))
-	  });
-	
-     	var raster = new ol.layer.Tile({
+var agebs = new ol.layer.Tile({
+   source: new ol.source.TileWMS(/** @type {olx.source.TileWMSOptions} */ ({
+   url: 'http://patung.mine.nu/geoserver/megadapt/wms',
+   params: {'LAYERS': 'megadapt:agebs_calles_geo', 'TILED': true},
+   serverType: 'geoserver'
+   }))
+});
+
+var raster = new ol.layer.Tile({
       		source: new ol.source.OSM()
-    	});
+});
      
      	
  
